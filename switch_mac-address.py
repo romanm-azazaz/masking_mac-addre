@@ -20,9 +20,9 @@ class mac_address:
        mac = ':'.join(mac_hex[i: i + 2] for i in range(0, 11, 2))
        return mac
 
-    @staticmethod
-    def switch():
-        cmd = F'ifconfig #{interface} ether #{mac_address}'
+    @classmethod
+    def switch(cls):
+        cmd = F'ifconfig #{interface} ether #{cls.generation}'
 
 
 defolt_mac = mac_address.get_defolt()
