@@ -1,5 +1,5 @@
 ### Switch mac-address
-Script for automating mac-address change
+Script for automating mac-address change. \n
 Only works for macOS!!!
 ## how to use?
 ```
