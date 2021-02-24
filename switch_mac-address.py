@@ -39,7 +39,7 @@ class mac_address:
 
 def create_parser():
     parser = argparse.ArgumentParser()
-    parser.add_argument('-R', '--Random'action='store_const', const=True, default=True,
+    parser.add_argument('-R', '--Random', action='store_const', const=True, default=True,
                         help='Generates a random set of characters similar to mac-faddres')
     parser.add_argument('-i', '--interface', default='en0')
     parser.add_argument('-p', '--platform', choices=['macos', 'linux'], default='macos')  
