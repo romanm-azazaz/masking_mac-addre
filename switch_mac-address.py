@@ -2,7 +2,6 @@ import subprocess
 import argparse
 import uuid
 import sys
-import time
 
 class mac_address:
 
@@ -40,17 +39,16 @@ class mac_address:
 
 def create_parser():
     parser = argparse.ArgumentParser()
-    parser.add_argument('-R', action='store_const', const=True, default=False,
+    parser.add_argument('-R', '--Random'action='store_const', const=True, default=True,
                         help='Generates a random set of characters similar to mac-faddres')
-    parser.add_argument('-i', '--interface')
+    parser.add_argument('-i', '--interface', default='en0')
     parser.add_argument('-p', '--platform', choices=['macos', 'linux'], default='macos')  
-    script_key = parser.parse_args()
-    return script_key
+    script_arg = parser.parse_args()
+    return script_arg
 
 def main():
-    script_key = create_parser()
-    if script_key.R: mac_address.call_switch(script_key.interface, script_key.platform)
-    else: sys.exit(1)
+    script_arg = create_parser()
+    mac_address.call_switch(script_arg.interface, script_arg.platform)
 
 if __name__ == '__main__': main()
 
