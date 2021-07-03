@@ -14,6 +14,7 @@ class MacAddress:
         fake_mac_hec = uuid.uuid4().hex[0:12]
         default_mac_hec = cls.get_default()
         fake_mac = cls.formatting_mac(default_mac_hec[0:6] + fake_mac_hec[6:12])
+        print(F'Generated fake mac {fake_mac}')
         return fake_mac
 
     @classmethod
@@ -24,7 +25,6 @@ class MacAddress:
     @classmethod
     def call_switch(cls, interface):
         fake_mac = cls.get_fake()
-        print(F'Fake mac {fake_mac}')
         command_list = {'macos':F'ifconfig {interface} ether {fake_mac} &&\
                                   networksetup -setairportpower {interface} off &&\
                        sleep 5 && networksetup -setairportpower {interface} on'}
