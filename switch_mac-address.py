@@ -3,52 +3,44 @@ import argparse
 import uuid
 import sys
 
-class mac_address:
+class MacAddress:
 
     @classmethod
-    def get_default(cls, platform):
+    def get_default(cls):
         mac_hex = hex(uuid.getnode()).replace('0x', '')
-        default_mac = cls.formatting_mac(mac_hex, platform)
-        return default_mac
+        return mac_hex
 
     @classmethod
     def get_fake(cls):
-        mac_hex = uuid.uuid4().hex[0:12]
-        fake_mac = cls.formatting_mac(mac_hex)
+        fake_mac_hec = uuid.uuid4().hex[0:12]
+        default_mac_hec = cls.get_default()
+        fake_mac = cls.formatting_mac(default_mac_hec[0:6] + fake_mac_hec[6:12])
         return fake_mac
 
     @classmethod
-    def formatting_mac(cls, mac_hex, platform=''):
-        if not platform in 'linux': pass
-        else: mac_hex = F'0{mac_hex}'
+    def formatting_mac(cls, mac_hex):
         mac = ':'.join(mac_hex[i: i + 2] for i in range(0, 11, 2))
         return mac
 
     @classmethod
-    def call_switch(cls, interface, platform):
+    def call_switch(cls, interface):
         fake_mac = cls.get_fake()
-        print(F'default mac {cls.get_default(platform)}\nfake mac {fake_mac}')
+        print(F'Fake mac {fake_mac}')
         command_list = {'macos':F'ifconfig {interface} ether {fake_mac} &&\
                                   networksetup -setairportpower {interface} off &&\
-                       sleep 5 && networksetup -setairportpower {interface} on',
-                        'linux':F'ifconfig {interface} down &&\
-                                  ifconfig {interface} hw ether {fake_mac} &&\
-                                  ifconfig {interface} up'}
-        command = command_list.get(platform)
+                       sleep 5 && networksetup -setairportpower {interface} on'}
+        command = command_list.get('macos')
         subprocess.call(command, shell=True)
 
 def create_parser():
     parser = argparse.ArgumentParser()
-    parser.add_argument('-R', '--Random', action='store_const', const=True, default=True,
-                        help='Generates a random set of characters similar to mac-faddres')
     parser.add_argument('-i', '--interface', default='en0')
-    parser.add_argument('-p', '--platform', choices=['macos', 'linux'], default='macos')  
     script_arg = parser.parse_args()
     return script_arg
 
 def main():
     script_arg = create_parser()
-    mac_address.call_switch(script_arg.interface, script_arg.platform)
+    MacAddress.call_switch(script_arg.interface)
 
 if __name__ == '__main__': main()
 
