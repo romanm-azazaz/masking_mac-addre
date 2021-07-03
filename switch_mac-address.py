@@ -1,7 +1,6 @@
 import subprocess
 import argparse
 import uuid
-import sys
 
 class MacAddress:
 
