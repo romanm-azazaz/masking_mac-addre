@@ -5,5 +5,5 @@ Only works for macOS!!!
 The script replaces the last three octets of your original MAC address.
 ## how to use?
 ```
-sudo python3 switch_mac-address.py -i {interface}
+sudo python3 switch_mac-address.py -i=eth0
 ```
