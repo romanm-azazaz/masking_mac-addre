@@ -1,4 +1,4 @@
-### Masking mac addre
+### Spoofing MAC address
 Script for automating mac-address change. \n
 Only works for macOS!!!
 ## How it works?
